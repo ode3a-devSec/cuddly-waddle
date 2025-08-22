@@ -10,11 +10,6 @@ ENV/
 env.bak/
 venv.bak/
 
-# Alembic
-alembic/versions/*.pyc
-alembic/versions/__pycache__/
-*.log
-
 # Virtual environment
 .venv/
 pip-wheel-metadata/
@@ -73,6 +68,8 @@ share/python-wheels/
 coverage/
 htmlcov/
 
-# Alembic migration cache files
-alembic.ini.bak
+# Alembic - Keep migration scripts, ignore cache
+alembic/versions/__pycache__/
+*.log
+
 venv-alembic
