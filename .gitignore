@@ -72,4 +72,4 @@ htmlcov/
 alembic/versions/__pycache__/
 *.log
 
-venv-alembic
+venv-alembic/
