@@ -1,0 +1,82 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:17.6
+    container_name: lms_postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - lms_network
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: lms_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "${PGADMIN_PORT}:80"
+    networks:
+      - lms_network
+    depends_on:
+      - postgres
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lms_fastapi
+    depends_on:
+      - postgres
+    networks:
+      - lms_network
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000:8000"
+    env_file:
+      - .env # Make environment variables available inside FastAPI container
+
+  alembic:
+    build: .
+    container_name: lms_alembic
+    working_dir: /app
+    command: tail -f /dev/null
+    volumes:
+      - ./app:/app
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    networks:
+      - lms_network
+
+  nginx:
+    image: nginx:latest
+    container_name: lms_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./app/static:/static
+      - ./certs:/etc/nginx/certs
+    depends_on:
+      - fastapi
+    networks:
+      - lms_network
+
+volumes:
+  postgres_data:
+
+
+networks:
+  lms_network:
+    driver: bridge

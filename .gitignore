@@ -1,0 +1,78 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Alembic
+alembic/versions/*.pyc
+alembic/versions/__pycache__/
+*.log
+
+# Virtual environment
+.venv/
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+*.egg
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Environment variables
+.env
+.env.*
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Docker
+*.pid
+*.log
+*.bak
+.docker/
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Node (if you add a frontend in the same repo)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# System
+.DS_Store
+Thumbs.db
+
+# Build / Cache
+__pycache__/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.mypy_cache/
+.pytest_cache/
+.cache/
+coverage/
+htmlcov/
+
+# Alembic migration cache files
+alembic.ini.bak
+venv-alembic
